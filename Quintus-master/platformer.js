@@ -164,17 +164,20 @@ Q.Sprite.extend("PlayerStrip",{
       global_seaweed_count -= 1;
       global_sushi_obtained_count += 1;
       this.p.seaweed_count = this.p.seaweed_count - 1;
-      switch(sushi_type) {
+       switch(sushi_type) {
         // do the effect and push onto status_effects
         case "red_fish":
           console.log("hello", this.p.rice_count, this.p.sushi_list.length);
           this.p.scale += 2;
-          this.p.status_effects.push([1,2]);
+          this.p.status_effects.push([1,4]);
           break;
         case "blue_fish":
-          this.p.scale = 1.1;
+          this.p.reverseControls = true;
+          this.p.status_effects.push([2,3]);
         case "orange_fish":
-          this.pscale = 1.1;
+          this.p.jumpSpeed -= 600;
+          this.p.maxJumps += 2;
+          this.p.status_effects.push([3,4]);
         case "pink_fish":
           this.pscale = 1.1;
         case "green_fish":
@@ -191,8 +194,19 @@ Q.Sprite.extend("PlayerStrip",{
       if (len <= 0) {
         this.p.status_effects.splice(i, 1);
         // undo the effect
-        this.p.scale -= 2;
-        
+        switch(effect) {
+          case 1:
+            this.p.scale -= 2;
+            break;
+          case 2:
+            this.p.reverseControls = false;
+            break;
+          case 3:
+            this.p.jumpSpeed += 600;
+            this.p.maxJumps -= 2;
+            break;
+
+        } 
       } else {
         console.log(len);
         this.p.status_effects[i] = [effect, len-dt];

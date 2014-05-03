@@ -119,18 +119,21 @@
   <tile id="2">
    <properties>
     <property name="Class" value="Sushi"/>
+    <property name="name" value="blue_fish"/>
     <property name="sprite" value="blue_fish"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
     <property name="Class" value="Sushi"/>
+    <property name="name" value="pink_fish"/>
     <property name="sprite" value="pink_fish"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
     <property name="Class" value="Sushi"/>
+    <property name="name" value="green_fish"/>
     <property name="sprite" value="green_fish"/>
    </properties>
   </tile>
@@ -4223,12 +4226,9 @@
   </object>
  </objectgroup>
  <objectgroup name="Sprites" width="200" height="20">
-  <object gid="207" x="1311" y="641"/>
+  <object gid="199" x="1050" y="1190"/>
+  <object gid="199" x="2170" y="839"/>
   <object gid="207" x="626" y="729"/>
-  <object gid="207" x="440" y="519"/>
-  <object gid="207" x="1243" y="640"/>
-  <object gid="207" x="1382" y="634"/>
-  <object gid="207" x="1446" y="641"/>
   <object gid="213" x="1128" y="639"/>
   <object gid="213" x="1002" y="491"/>
   <object gid="213" x="826" y="703"/>
@@ -4236,12 +4236,7 @@
   <object gid="209" x="1246" y="1104"/>
   <object gid="208" x="1125" y="1101"/>
   <object gid="212" x="1849" y="662"/>
-  <object gid="212" x="1291" y="601"/>
-  <object gid="212" x="1349" y="601"/>
-  <object gid="212" x="1425" y="609"/>
   <object gid="210" x="554" y="564"/>
-  <object gid="207" x="788" y="434"/>
-  <object gid="207" x="984" y="642"/>
   <object gid="207" x="1094" y="772"/>
   <object gid="225" x="489" y="836"/>
   <object gid="227" x="1863" y="846"/>
@@ -4250,7 +4245,12 @@
   <object gid="227" x="3140" y="443"/>
   <object gid="227" x="1138" y="834"/>
   <object gid="228" x="995" y="778"/>
-  <object gid="228" x="1025" y="1176"/>
-  <object gid="225" x="2018" y="869"/>
+  <object gid="208" x="401" y="486"/>
+  <object gid="207" x="871" y="64"/>
+  <object gid="207" x="963" y="70"/>
+  <object gid="207" x="1057" y="70"/>
+  <object gid="213" x="1133" y="94"/>
+  <object gid="213" x="1247" y="92"/>
+  <object gid="213" x="1319" y="108"/>
  </objectgroup>
 </map>

@@ -833,13 +833,13 @@ Quintus.Input = function(Q) {
           p.jumping = true;
           p.ableToJump = false;
           p.currentJumps -= 1;
-          console.log("jumped");
+          //console.log("jumped");
           
         } else if (p.jumping && p.landed < 0 && (Q.input_release['up']) && p.ableToJump == false) {
           Q.input_release['up'] = false;
           
           p.ableToJump = true;
-          console.log("stopped jumpping");
+          //console.log("stopped jumpping");
         }
 
         else if(p.landed < 0 && (Q.inputs['up'] || Q.inputs['action']) && p.jumping && p.currentJumps > 0 && p.ableToJump)  {
@@ -847,7 +847,7 @@ Quintus.Input = function(Q) {
           p.vy = p.jumpSpeed;
           p.currentJumps -= 1;
           p.ableToJump = false;
-          console.log("jumps left: ", p.currentJumps);
+          //console.log("jumps left: ", p.currentJumps);
         }
         /*
         if(p.jumping && !(Q.inputs['up'] || Q.inputs['action'])) {
