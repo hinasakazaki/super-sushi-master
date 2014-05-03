@@ -70,6 +70,7 @@
   <tile id="12">
    <properties>
     <property name="Class" value="Heart"/>
+    <property name="sprite" value="heart"/>
     <property name="strength" value="25"/>
    </properties>
   </tile>
@@ -4151,5 +4152,10 @@
   <object gid="217" x="1050" y="1190"/>
   <object gid="218" x="1110" y="842"/>
   <object gid="217" x="2170" y="839"/>
+  <object gid="187" x="1020" y="740"/>
+  <object gid="187" x="856" y="740"/>
+  <object gid="187" x="860" y="596"/>
+  <object gid="187" x="540" y="564"/>
+  <object gid="187" x="518" y="352"/>
  </objectgroup>
 </map>
