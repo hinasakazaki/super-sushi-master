@@ -42,6 +42,9 @@ Q.Sprite.extend("Player",{
       speed: 300,
       strength: 100,
       score: 0,
+      rice_count: 0,
+      seaweed_count: 0,
+      sushi_list: [],
       type: Q.SPRITE_PLAYER,
       collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_DOOR | Q.SPRITE_COLLECTABLE
     });
@@ -377,6 +380,41 @@ Q.Collectable.extend("Heart", {
       colObj.p.strength = Math.max(colObj.p.strength + 25, 100);
       Q.stageScene('hud', 3, colObj.p);
       Q.audio.play('heart.mp3');
+    }
+    this.destroy();
+  }
+});
+
+Q.Collectable.extend("Rice", {
+  // When a Rice is hit.
+  sensor: function(colObj) {
+    // Increment the rice count.
+    if (this.p.amount) {
+      colObj.p.rice_count = Math.max(colObj.p.rice_count + 1, 99);
+      Q.stageScene('hud', 3, colObj.p);
+    }
+    this.destroy();
+  }
+});
+
+Q.Collectable.extend("Seaweed", {
+  // When a Seaweed is hit.
+  sensor: function(colObj) {
+    // Increment the seaweed count.
+    if (this.p.amount) {
+      colObj.p.seaweed_count = Math.max(colObj.p.seaweed_count + 1, 99);
+      Q.stageScene('hud', 3, colObj.p);
+    }
+    this.destroy();
+  }
+});
+
+Q.Collectable.extend("Sushi", {
+  // When a Sushi is hit.
+  sensor: function(colObj) {
+    if (this.p.amount) {
+      colObj.p.sushi_list.push(this.p.name);
+      Q.stageScene('hud', 3, colObj.p);
     }
     this.destroy();
   }
