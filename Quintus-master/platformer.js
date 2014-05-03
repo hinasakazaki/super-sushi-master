@@ -12,6 +12,7 @@ var global_sushi_count = 0;
 var global_seaweed_count = 0;
 var global_sushi_obtained_count = 0;
 var global_holy_shit = false;
+var global_current_level = "level1";
 window.addEventListener("load",function() {
 
 // Set up an instance of the Quintus engine  and include
@@ -500,6 +501,9 @@ Q.Collectable.extend("Rice", {
       global_rice_count += 1;
       //Q.stageScene('hud', 3, colObj.p);
     this.destroy();
+  },
+  step: function(dt) {
+    this.play("play");
   }
 });
 
@@ -595,6 +599,11 @@ Q.loadTMX("level1.tmx, sushistatusindicator.png, sushistatusindicator.json, play
     Q.compileSheets("ricestrip.png", "rice.json");
     Q.compileSheets("fishstrip.png", "fish.json");
     Q.compileSheets("seaweed.png", "seaweed.json");
+    Q.animations("rice", {
+      play: {
+        frames: [0,1], rate: 1/2, loop: true
+      }
+    });
     Q.animations("playerstrip", {
       walk_right: { frames: [4,5,6], rate: 1/6, flip: false, loop: true },
       walk_left: { frames:  [4,5,6], rate: 1/6, flip:"x", loop: true },
@@ -630,15 +639,5 @@ Q.loadTMX("level1.tmx, sushistatusindicator.png, sushistatusindicator.json, play
   }
 });
 
-// ## Possible Experimentations:
-// 
-// The are lots of things to try out here.
-// 
-// 1. Modify level.json to change the level around and add in some more enemies.
-// 2. Add in a second level by creating a level2.json and a level2 scene that gets
-//    loaded after level 1 is complete.
-// 3. Add in a title screen
-// 4. Add in a hud and points for jumping on enemies.
-// 5. Add in a `Repeater` behind the TileLayer to create a paralax scrolling effect.
 
 });
