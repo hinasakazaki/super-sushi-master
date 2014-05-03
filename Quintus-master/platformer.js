@@ -45,6 +45,7 @@ Q.Sprite.extend("Player",{
       rice_count: 0,
       seaweed_count: 0,
       sushi_list: [],
+      status_effects: [],
       type: Q.SPRITE_PLAYER,
       collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_DOOR | Q.SPRITE_COLLECTABLE
     });
@@ -136,14 +137,26 @@ Q.Sprite.extend("Player",{
 
   step: function(dt) {
     var processed = false;
+
     if (this.p.rice_count > 0 && this.p.seaweed_count > 0 && this.p.sushi_list.length > 0) {
       var sushi_type = this.p.sushi_list.pop().name;
       this.p.rice_count = this.p.rice_count - 1;
       this.p.seaweed_count = this.p.seaweed_count - 1;
       switch(sushi_type) {
+        // do the effect and push onto status_effects
       }
     }
 
+    for (var i = this.p.status_effects.length - 1; i >= 0; i--) {
+      var effect, len;
+      [effect, len] = this.p.status_effects[i];
+      if (this.p.status_effects[i] == 0) {
+        this.p.status_effects.splice(i, 1);
+        // undo the effect
+      } else {
+        this.p.status_effects[i] = [effect, len-1];
+      }
+    }
 
     if (this.p.immune) {
       // Swing the sprite opacity between 50 and 100% percent when immune.
