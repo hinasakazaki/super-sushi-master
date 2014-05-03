@@ -20,10 +20,10 @@ var Q = window.Q = Quintus({audioSupported: [ 'wav','mp3','ogg' ]})
         .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, TMX, Audio")
         // Maximize this game to whatever the size of the browser is
         .setup({ maximize: false,
-                  width:   1000, // Set the default width to 800 pixels
+                  width:   800, // Set the default width to 800 pixels
                   height:  600, // Set the default height to 600 pixels
-                  upsampleWidth:  420,  // Double the pixel density of the 
-                  upsampleHeight: 320,  // game if the w or h is 420x320
+                  upsampleWidth:  800,  // Double the pixel density of the 
+                  upsampleHeight: 600,  // game if the w or h is 420x320
                         // or smaller (useful for retina phones)
                   downsampleWidth: 1024, // Halve the pixel density if resolution
                   downsampleHeight: 768
@@ -543,12 +543,12 @@ Q.scene("level1",function(stage) {
 
 Q.scene('hud',function(stage) {
   var container = stage.insert(new Q.UI.Container({
-    x: 50, y: 0
+    x: 170, y: 20
   }));
 
 
   var sushiObtained = container.insert(new Q.UI.Text({x:200, y:20,
-    label: "Number of Sushi obtained: " + global_sushi_obtained_count, color:"white" }))
+    label: "Number of Sushi obtained: " + global_sushi_obtained_count, color:"#ebe4e8", size:50, fontFamily:"Oswald"}))
 
   var rice_indicator = stage.insert(new Q.Sushi_Indicator({x:Q.width - 100, y:40}));
   //var seaweed_indicator = stage.insert(new Q.Seaweed_Indicator);
