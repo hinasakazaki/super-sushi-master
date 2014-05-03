@@ -798,7 +798,7 @@ Quintus.Input = function(Q) {
           }        
         }      
 
-        if((Q.inputs['right'] && this.p.reverseControls) || (Q.inputs['left'] && !this.p.reverseControls)) {
+        if((Q.inputs['right'] && p.reverseControls) || (Q.inputs['left'] && !p.reverseControls)) {
           p.direction = 'left';
           if(collision && p.landed > 0) {
             p.vx += p.acceleration * collision.normalY;
@@ -806,7 +806,7 @@ Quintus.Input = function(Q) {
           } else {
             p.vx -= p.acceleration;
           }        
-        } else if((Q.inputs['left'] && this.p.reverseControls) || (Q.inputs['right'] && !this.p.reverseControls)) {
+        } else if((Q.inputs['left'] && p.reverseControls) || (Q.inputs['right'] && !p.reverseControls)) {
           p.direction = 'right';
           if(collision && p.landed > 0) {
             p.vx -= p.acceleration * collision.normalY;
