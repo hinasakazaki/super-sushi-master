@@ -481,7 +481,7 @@ Q.scene('hud',function(stage) {
   container.fit(20);
 });
 
-Q.loadTMX("level1.tmx, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, seaweed.png, monster1.png, monster2.png, monster1.json, monster2.json, seaweed.json, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
+Q.loadTMX("level1.tmx, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, seaweed.png, monster1strip.png, monster2strip.png, monster1.json, monster2.json, seaweed.json, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
     Q.compileSheets("playerstrip.png", "playerstrip.json");
     Q.compileSheets("collectables.png","collectables.json");
     Q.compileSheets("monster1strip.png", "monster1.json");

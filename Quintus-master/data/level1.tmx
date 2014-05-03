@@ -175,6 +175,9 @@
  <tileset firstgid="235" name="seaweed" tilewidth="30" tileheight="85">
   <image source="../images/seaweed.png" width="60" height="170"/>
  </tileset>
+ <tileset firstgid="239" name="monster1" tilewidth="260" tileheight="350">
+  <image source="../images/monsterstrip.png" width="520" height="350"/>
+ </tileset>
  <imagelayer name="Background" width="200" height="20">
   <image source="../images/bg.png"/>
  </imagelayer>
@@ -4200,20 +4203,6 @@
   </object>
  </objectgroup>
  <objectgroup name="Sprites" width="200" height="20">
-  <object gid="168" x="1120" y="1120"/>
-  <object gid="168" x="1190" y="1120"/>
-  <object gid="168" x="1260" y="1120"/>
-  <object gid="168" x="1330" y="1120"/>
-  <object gid="168" x="1330" y="1050"/>
-  <object gid="168" x="1260" y="1050"/>
-  <object gid="168" x="1190" y="1050"/>
-  <object gid="168" x="1120" y="1050"/>
-  <object gid="168" x="1120" y="1190"/>
-  <object gid="168" x="1190" y="1190"/>
-  <object gid="168" x="1330" y="1190"/>
-  <object gid="168" x="1260" y="1190"/>
-  <object gid="168" x="1400" y="840"/>
-  <object gid="168" x="1330" y="840"/>
   <object gid="208" x="630" y="840"/>
   <object gid="209" x="1050" y="1190"/>
   <object gid="210" x="1110" y="842"/>
@@ -4230,5 +4219,12 @@
   <object gid="228" x="138" y="838"/>
   <object gid="237" x="580" y="839"/>
   <object gid="238" x="803" y="842"/>
+  <object gid="219" x="1246" y="1104"/>
+  <object gid="218" x="1125" y="1101"/>
+  <object gid="222" x="1849" y="662"/>
+  <object gid="222" x="1291" y="601"/>
+  <object gid="222" x="1349" y="601"/>
+  <object gid="222" x="1425" y="609"/>
+  <object gid="220" x="554" y="564"/>
  </objectgroup>
 </map>
