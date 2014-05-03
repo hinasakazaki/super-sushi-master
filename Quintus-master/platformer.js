@@ -11,6 +11,7 @@ var global_rice_count = 0;
 var global_sushi_count = 0;
 var global_seaweed_count = 0;
 var global_sushi_obtained_count = 0;
+var global_holy_shit = false;
 window.addEventListener("load",function() {
 
 // Set up an instance of the Quintus engine  and include
@@ -63,6 +64,7 @@ Q.Sprite.extend("PlayerStrip",{
       acceleration: 20,
       sushi_list: [],
       scale: 1,
+      holy_shit: false,
       status_effects: [],
       type: Q.SPRITE_PLAYER,
       collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_DOOR | Q.SPRITE_COLLECTABLE
@@ -110,6 +112,7 @@ Q.Sprite.extend("PlayerStrip",{
     this.p.strength = 100;
     this.animate({opacity: 1});
     Q.stageScene('hud', 3, this.p);
+    global_holy_shit = false;
   },
 
   enemyHit: function(data) {
@@ -154,6 +157,7 @@ Q.Sprite.extend("PlayerStrip",{
   },
 
   step: function(dt) {
+    
     var processed = false;
     if (this.p.rice_count > 0 && this.p.seaweed_count > 0 && this.p.sushi_list.length > 0) {
 
@@ -167,7 +171,7 @@ Q.Sprite.extend("PlayerStrip",{
        switch(sushi_type) {
         // do the effect and push onto status_effects
         case "red_fish":
-          console.log("hello", this.p.rice_count, this.p.sushi_list.length);
+          //console.log("hello", this.p.rice_count, this.p.sushi_list.length);
           this.p.scale += 2;
           this.p.status_effects.push([1,4]);
           break;
@@ -179,17 +183,22 @@ Q.Sprite.extend("PlayerStrip",{
           this.p.maxJumps += 2;
           this.p.status_effects.push([3,4]);
         case "pink_fish":
-          this.pscale = 1.1;
+          this.p.scale *= 0.3;
+          this.p.status_effects.push([4,4]);
         case "green_fish":
-          this.pscale = 1.1;
+          this.p.angle += 180;
+          this.p.status_effects.push([5,10]);
         case "yellow_fish":
-          this.pscale = 1.1;
+          console.log("..");
+          global_holy_shit = true;
+          this.p.status_effects.push([6,10]);
       }
     }
 
     for (var i = this.p.status_effects.length - 1; i >= 0; i--) {
       var list = this.p.status_effects[i];
       var effect = list[0]
+      
       var len = list[1];
       if (len <= 0) {
         this.p.status_effects.splice(i, 1);
@@ -205,10 +214,19 @@ Q.Sprite.extend("PlayerStrip",{
             this.p.jumpSpeed += 600;
             this.p.maxJumps -= 2;
             break;
+          case 4:
+            this.p.scale *= 3;
+            break;
+          case 5:
+            this.p.angle -= 180;
+            break;
+          case 6:
+            global_holy_shit = false;
+            break;
 
         } 
       } else {
-        console.log(len);
+        //console.log(len);
         this.p.status_effects[i] = [effect, len-dt];
       }
     }
@@ -334,6 +352,9 @@ Q.Sprite.extend("Enemy", {
   },
 
   step: function(dt) {
+    if (global_holy_shit) {
+      this.p.angle += 10;
+    }
     if(this.p.dead) {
       this.del('2d, aiBounce');
       this.p.deadTimer++;
@@ -422,6 +443,11 @@ Q.Sprite.extend("Collectable", {
     }
     Q.audio.play('coin.mp3');
     this.destroy();
+  }, 
+  step: function(dt) {
+    if (global_holy_shit) {
+      this.p.angle += 10;
+    }
   }
 });
 
@@ -469,10 +495,10 @@ Q.Collectable.extend("Rice", {
   // When a Rice is hit.
   sensor: function(colObj) {
     // Increment the rice count.
-      console.log(colObj.p.rice_count);
+      //console.log(colObj.p.rice_count);
       colObj.p.rice_count = Math.max(1, colObj.p.rice_count+1);
       global_rice_count += 1;
-      Q.stageScene('hud', 3, colObj.p);
+      //Q.stageScene('hud', 3, colObj.p);
     this.destroy();
   }
 });
@@ -483,7 +509,7 @@ Q.Collectable.extend("Seaweed", {
     // Increment the seaweed count.
       colObj.p.seaweed_count = Math.max(colObj.p.seaweed_count + 1, 1);
       global_seaweed_count += 1;
-      Q.stageScene('hud', 3, colObj.p);
+      //Q.stageScene('hud', 3, colObj.p);
     this.destroy();
   }
 });
@@ -492,19 +518,20 @@ Q.Collectable.extend("Sushi", {
   // When a Fish is hit.
   init: function(p) {
     this._super(p, {
-      name:"default",
+      name:"red_fish",
+      sheet:"fish",
+      sprite:"red_fish",
     });
   },
   sensor: function(colObj) {
-    if (this.p.amount) {
-      console.log("hi");
-      colObj.p.sushi_list.push(this.p.name);
-      global_sushi_count += 1;
-      console.log(colObj.p.sushi_list);
-      Q.stageScene('hud', 3, colObj.p);
-    }
+    //console.log("hi");
+    colObj.p.sushi_list.push(this.p.name);
+    global_sushi_count += 1;
+    //console.log(colObj.p.sushi_list);
+    //Q.stageScene('hud', 3, colObj.p);
     this.destroy();
-  }
+  },
+
 });
 
 
