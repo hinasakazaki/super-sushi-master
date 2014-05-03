@@ -36,8 +36,8 @@ Q.Sprite.extend("PlayerStrip",{
       sheet: "playerstrip",
       sprite: "playerstrip",
       direction: "right",
-      //standingPoints: [ [ -16, 44], [ -23, 35 ], [-23,-48], [23,-48], [23, 35 ], [ 16, 44 ]],
-      //duckingPoints : [ [ -16, 44], [ -23, 35 ], [-23,-10], [23,-10], [23, 35 ], [ 16, 44 ]],
+      standingPoints: [ [ -16, -44], [ -23, 70 ], [23,70], [ 16, -44 ]],
+      duckingPoints: [ [ -16, -44], [ -23, 70 ], [23,70], [ 16, -44 ]],
       jumpSpeed: -1000,
       gravity: 100,
       speed: 150,
@@ -47,12 +47,13 @@ Q.Sprite.extend("PlayerStrip",{
       seaweed_count: 0,
       acceleration: 50,
       sushi_list: [],
+      scale: 1,
       status_effects: [],
       type: Q.SPRITE_PLAYER,
       collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_DOOR | Q.SPRITE_COLLECTABLE
     });
 
-    //this.p.points = this.p.standingPoints;
+    this.p.points = this.p.standingPoints;
 
     this.add('2d, platformerControls, animation, tween');
 
@@ -139,14 +140,16 @@ Q.Sprite.extend("PlayerStrip",{
 
   step: function(dt) {
     var processed = false;
-    if (this.p.rice_count > 0 && this.p.seaweed_count > 0 && this.p.sushi_list.length > 0) {
+    if (this.p.rice_count > 0 && this.p.seaweed_count >= 0 && this.p.sushi_list.length > 0) {
       var sushi_type = this.p.sushi_list.pop();
       this.p.rice_count = this.p.rice_count - 1;
-      this.p.seaweed_count = this.p.seaweed_count - 1;
+      //this.p.seaweed_count = this.p.seaweed_count - 1;
       switch(sushi_type) {
         // do the effect and push onto status_effects
         case "red_fish":
-          this.p.scale = 0.3;
+          console.log("hello", this.p.rice_count, this.p.sushi_list.length);
+          this.p.scale += 2;
+          this.p.status_effects.push([1,2]);
           break;
         case "blue_fish":
           this.p.scale = 1.1;
@@ -162,13 +165,17 @@ Q.Sprite.extend("PlayerStrip",{
     }
 
     for (var i = this.p.status_effects.length - 1; i >= 0; i--) {
-      var effect, len;
-      [effect, len] = this.p.status_effects[i];
-      if (this.p.status_effects[i] == 0) {
+      var list = this.p.status_effects[i];
+      var effect = list[0]
+      var len = list[1];
+      if (len <= 0) {
         this.p.status_effects.splice(i, 1);
         // undo the effect
+        this.p.scale -= 2;
+        
       } else {
-        this.p.status_effects[i] = [effect, len-1];
+        console.log(len);
+        this.p.status_effects[i] = [effect, len-dt];
       }
     }
 
@@ -234,10 +241,10 @@ Q.Sprite.extend("PlayerStrip",{
         if(this.p.landed > 0) {
           this.p.vx = this.p.vx * (1 - dt*2);
         }
-        //this.p.points = this.p.duckingPoints;
+        this.p.points = this.p.duckingPoints;
       } else {
         this.p.ignoreControls = false;
-        //this.p.points = this.p.standingPoints;
+        this.p.points = this.p.standingPoints;
 
         if(this.p.vx > 0) {
           if(this.p.landed > 0) {
@@ -425,10 +432,9 @@ Q.Collectable.extend("Rice", {
   // When a Rice is hit.
   sensor: function(colObj) {
     // Increment the rice count.
-    if (this.p.amount) {
-      colObj.p.rice_count = Math.max(colObj.p.rice_count + 1, 99);
+      console.log(colObj.p.rice_count);
+      colObj.p.rice_count = Math.max(1, colObj.p.rice_count+1);
       Q.stageScene('hud', 3, colObj.p);
-    }
     this.destroy();
   }
 });
@@ -454,7 +460,9 @@ Q.Collectable.extend("Sushi", {
   },
   sensor: function(colObj) {
     if (this.p.amount) {
+      console.log("hi");
       colObj.p.sushi_list.push(this.p.name);
+      console.log(colObj.p.sushi_list);
       Q.stageScene('hud', 3, colObj.p);
     }
     this.destroy();

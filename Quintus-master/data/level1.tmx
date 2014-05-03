@@ -50,15 +50,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="157" name="player" tilewidth="72" tileheight="97">
-  <image source="../images/player.png" width="1296" height="98"/>
-  <tile id="0">
-   <properties>
-    <property name="Class" value="Player"/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="175" name="collectables" tilewidth="70" tileheight="70" spacing="2">
+ <tileset firstgid="157" name="collectables" tilewidth="70" tileheight="70" spacing="2">
   <image source="../images/collectables.png" width="936" height="216"/>
   <tile id="1">
    <properties>
@@ -75,7 +67,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="214" name="doors" tilewidth="70" tileheight="110">
+ <tileset firstgid="196" name="doors" tilewidth="70" tileheight="110">
   <image source="../images/doors.png" width="140" height="110"/>
   <tile id="0">
    <properties>
@@ -85,7 +77,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="216" name="enemies" tilewidth="72" tileheight="72">
+ <tileset firstgid="198" name="enemies" tilewidth="72" tileheight="72">
   <image source="../images/enemies.png" width="216" height="216"/>
   <tile id="0">
    <properties>
@@ -106,7 +98,7 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="225" name="fish" tilewidth="50" tileheight="50">
+ <tileset firstgid="207" name="fish" tilewidth="50" tileheight="50">
   <image source="../images/fishstrip.png" width="300" height="50"/>
   <tile id="0">
    <properties>
@@ -119,6 +111,8 @@
   <tile id="1">
    <properties>
     <property name="Class" value="Sushi"/>
+    <property name="name" value="orange_fish"/>
+    <property name="sheet" value="fish"/>
     <property name="sprite" value="orange_fish"/>
    </properties>
   </tile>
@@ -143,11 +137,13 @@
   <tile id="5">
    <properties>
     <property name="Class" value="Sushi"/>
+    <property name="name" value="yellow_fish"/>
+    <property name="sheet" value="fish"/>
     <property name="sprite" value="yellow_fish"/>
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="231" name="rice" tilewidth="70" tileheight="59">
+ <tileset firstgid="213" name="rice" tilewidth="70" tileheight="59">
   <image source="../images/ricestrip.png" width="140" height="59"/>
   <tile id="0">
    <properties>
@@ -164,13 +160,19 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="233" name="Player" tilewidth="77" tileheight="136">
+ <tileset firstgid="215" name="Player" tilewidth="77" tileheight="136">
   <image source="../images/playerstrip.png" width="770" height="136"/>
   <tile id="3">
    <properties>
     <property name="Class" value="PlayerStrip"/>
    </properties>
   </tile>
+ </tileset>
+ <tileset firstgid="225" name="seaweed" tilewidth="30" tileheight="85">
+  <image source="../images/seaweed.png" width="60" height="170"/>
+ </tileset>
+ <tileset firstgid="229" name="monster1" tilewidth="260" tileheight="350">
+  <image source="../images/monster1strip.png" width="520" height="350"/>
  </tileset>
  <imagelayer name="Background" width="200" height="20">
   <image source="../images/bg.png"/>
@@ -4183,13 +4185,13 @@
   </data>
  </layer>
  <objectgroup name="Doors" width="200" height="20">
-  <object gid="214" x="1190" y="840">
+  <object gid="196" x="1190" y="840">
    <properties>
     <property name="id" value="door-1"/>
     <property name="link" value="door-2"/>
    </properties>
   </object>
-  <object gid="214" x="980" y="1190">
+  <object gid="196" x="980" y="1190">
    <properties>
     <property name="id" value="door-2"/>
     <property name="link" value="door-1"/>
@@ -4197,40 +4199,29 @@
   </object>
  </objectgroup>
  <objectgroup name="Sprites" width="200" height="20">
-  <object gid="176" x="1120" y="1120"/>
-  <object gid="176" x="1190" y="1120"/>
-  <object gid="176" x="1260" y="1120"/>
-  <object gid="176" x="1330" y="1120"/>
-  <object gid="176" x="1330" y="1050"/>
-  <object gid="176" x="1260" y="1050"/>
-  <object gid="176" x="1190" y="1050"/>
-  <object gid="176" x="1120" y="1050"/>
-  <object gid="176" x="1120" y="1190"/>
-  <object gid="176" x="1190" y="1190"/>
-  <object gid="176" x="1330" y="1190"/>
-  <object gid="176" x="1260" y="1190"/>
-  <object gid="176" x="1400" y="840"/>
-  <object gid="176" x="1330" y="840"/>
-  <object gid="176" x="1050" y="840"/>
-  <object gid="176" x="980" y="840"/>
-  <object gid="216" x="630" y="840"/>
-  <object gid="217" x="1050" y="1190"/>
-  <object gid="218" x="1110" y="842"/>
-  <object gid="217" x="2170" y="839"/>
-  <object gid="187" x="1020" y="740"/>
-  <object gid="187" x="856" y="740"/>
-  <object gid="187" x="860" y="596"/>
-  <object gid="187" x="540" y="564"/>
-  <object gid="187" x="518" y="352"/>
-  <object gid="225" x="756" y="523"/>
-  <object gid="225" x="626" y="729"/>
-  <object gid="225" x="440" y="519"/>
-  <object gid="225" x="672" y="385"/>
-  <object gid="225" x="964" y="395"/>
-  <object gid="225" x="1220" y="409"/>
-  <object gid="231" x="1128" y="639"/>
-  <object gid="231" x="1002" y="491"/>
-  <object gid="231" x="826" y="703"/>
-  <object gid="236" x="138" y="838"/>
+  <object gid="198" x="630" y="840"/>
+  <object gid="199" x="1050" y="1190"/>
+  <object gid="200" x="1110" y="842"/>
+  <object gid="199" x="2170" y="839"/>
+  <object gid="207" x="1311" y="641"/>
+  <object gid="207" x="626" y="729"/>
+  <object gid="207" x="440" y="519"/>
+  <object gid="207" x="1243" y="640"/>
+  <object gid="207" x="1382" y="634"/>
+  <object gid="207" x="1446" y="641"/>
+  <object gid="213" x="1128" y="639"/>
+  <object gid="213" x="1002" y="491"/>
+  <object gid="213" x="826" y="703"/>
+  <object gid="218" x="138" y="838"/>
+  <object gid="209" x="1246" y="1104"/>
+  <object gid="208" x="1125" y="1101"/>
+  <object gid="212" x="1849" y="662"/>
+  <object gid="212" x="1291" y="601"/>
+  <object gid="212" x="1349" y="601"/>
+  <object gid="212" x="1425" y="609"/>
+  <object gid="210" x="554" y="564"/>
+  <object gid="207" x="788" y="434"/>
+  <object gid="207" x="984" y="642"/>
+  <object gid="207" x="1094" y="772"/>
  </objectgroup>
 </map>
