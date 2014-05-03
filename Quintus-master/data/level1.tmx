@@ -106,6 +106,15 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="225" name="fish" tilewidth="50" tileheight="50">
+  <image source="../images/fishstrip.png" width="300" height="50"/>
+  <tile id="0">
+   <properties>
+    <property name="Class" value="Sushi"/>
+    <property name="sprite" value="red_fish"/>
+   </properties>
+  </tile>
+ </tileset>
  <imagelayer name="Background" width="200" height="20">
   <image source="../images/bg.png"/>
  </imagelayer>
@@ -4157,5 +4166,11 @@
   <object gid="187" x="860" y="596"/>
   <object gid="187" x="540" y="564"/>
   <object gid="187" x="518" y="352"/>
+  <object gid="225" x="756" y="523"/>
+  <object gid="225" x="626" y="729"/>
+  <object gid="225" x="440" y="519"/>
+  <object gid="225" x="672" y="385"/>
+  <object gid="225" x="964" y="395"/>
+  <object gid="225" x="1220" y="409"/>
  </objectgroup>
 </map>

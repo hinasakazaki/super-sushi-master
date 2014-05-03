@@ -1,0 +1,9 @@
+{
+	"red_fish":{"sx":0,"sy":0,"cols":1,"spacingX":0,"spacingY":0,"tilew":50,"tileh":50,"frames":1},
+	"orange_fish":{"sx":50,"sy":0,"cols":1,"spacingX":0,"spacingY":0,"tilew":50,"tileh":50,"frames":1},
+	"blue_fish":{"sx":100,"sy":0,"cols":1,"spacingX":0,"spacingY":0,"tilew":50,"tileh":50,"frames":1},
+	"pink_fish":{"sx":150,"sy":0,"cols":1,"spacingX":0,"spacingY":0,"tilew":50,"tileh":50,"frames":1},
+	"green_fish":{"sx":200,"sy":0,"cols":1,"spacingX":0,"spacingY":0,"tilew":50,"tileh":50,"frames":1},
+	"yellow_fish":{"sx":250,"sy":0,"cols":1,"spacingX":0,"spacingY":0,"tilew":50,"tileh":50,"frames":1}
+
+}
