@@ -501,18 +501,6 @@ Q.Sprite.extend("Goal", {
   }
 });
 
-Q.Collectable.extend("Heart", {
-  // When a Heart is hit.
-  sensor: function(colObj) {
-    // Increment the strength.
-    if (this.p.amount) {
-      colObj.p.strength = Math.max(colObj.p.strength + 25, 100);
-      Q.stageScene('hud', 3, colObj.p);
-      Q.audio.play('heart.mp3');
-    }
-    this.destroy();
-  }
-});
 
 Q.Collectable.extend("Rice", {
   // When a Rice is hit.
@@ -655,7 +643,12 @@ Q.loadTMX("level1.tmx, level2.tmx, sushistatusindicator.png, sushistatusindicato
 
 
     Q.animations("snail", EnemyAnimations);
-    Q.stageScene("level1");
+    if (global_current_level == 1) {
+      Q.stageScene("level1");
+    }
+    if (global_current_level == 2) {
+      Q.stageScene("level");
+    }
     Q.stageScene('hud', 3, Q('PlayerStrip').first().p);
   
 }, {

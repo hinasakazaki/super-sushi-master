@@ -4233,40 +4233,30 @@
   </object>
  </objectgroup>
  <objectgroup name="Sprites" width="200" height="20">
-  <object gid="199" x="1050" y="1190"/>
-  <object gid="199" x="2170" y="839"/>
-  <object gid="207" x="626" y="729"/>
   <object gid="213" x="1128" y="639"/>
-  <object gid="213" x="1002" y="491"/>
-  <object gid="213" x="826" y="703"/>
   <object gid="218" x="138" y="838"/>
   <object gid="209" x="1246" y="1104"/>
   <object gid="208" x="1125" y="1101"/>
   <object gid="212" x="1849" y="662"/>
-  <object gid="210" x="554" y="564"/>
   <object gid="207" x="1094" y="772"/>
-  <object gid="225" x="489" y="836"/>
+  <object gid="225" x="550" y="841"/>
   <object gid="227" x="1863" y="846"/>
   <object gid="227" x="518" y="842"/>
   <object gid="227" x="2411" y="778"/>
   <object gid="227" x="3140" y="443"/>
   <object gid="227" x="1138" y="834"/>
   <object gid="228" x="995" y="778"/>
-  <object gid="207" x="871" y="64"/>
-  <object gid="207" x="963" y="70"/>
-  <object gid="207" x="1057" y="70"/>
-  <object gid="213" x="1133" y="94"/>
-  <object gid="213" x="1247" y="92"/>
-  <object gid="213" x="1319" y="108"/>
-  <object gid="212" x="479" y="288"/>
-  <object gid="213" x="707" y="406"/>
   <object gid="213" x="331" y="372"/>
   <object gid="227" x="360" y="814"/>
   <object gid="227" x="428" y="680"/>
-  <object gid="209" x="337" y="450"/>
-  <object gid="209" x="161" y="458"/>
-  <object gid="209" x="83" y="598"/>
-  <object gid="209" x="203" y="672"/>
   <object gid="133" x="5465" y="350"/>
+  <object gid="228" x="1116" y="1172"/>
+  <object gid="225" x="1969" y="835"/>
+  <object gid="228" x="5307" y="490"/>
+  <object gid="228" x="4346" y="62"/>
+  <object gid="209" x="819" y="748"/>
+  <object gid="210" x="1377" y="786"/>
+  <object gid="208" x="2754" y="590"/>
+  <object gid="211" x="505" y="771"/>
  </objectgroup>
 </map>
