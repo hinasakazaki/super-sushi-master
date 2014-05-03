@@ -136,6 +136,15 @@ Q.Sprite.extend("Player",{
 
   step: function(dt) {
     var processed = false;
+    if (this.p.rice_count > 0 && this.p.seaweed_count > 0 && this.p.sushi_list.length > 0) {
+      var sushi_type = this.p.sushi_list.pop().name;
+      this.p.rice_count = this.p.rice_count - 1;
+      this.p.seaweed_count = this.p.seaweed_count - 1;
+      switch(sushi_type) {
+      }
+    }
+
+
     if (this.p.immune) {
       // Swing the sprite opacity between 50 and 100% percent when immune.
       if ((this.p.immuneTimer % 12) == 0) {

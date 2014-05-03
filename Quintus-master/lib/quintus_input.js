@@ -740,7 +740,8 @@ Quintus.Input = function(Q) {
   Q.component("platformerControls", {
     defaults: {
       speed: 200,
-      acceleration: 10,
+      acceleration: 20,
+      deacceleration: 10,
       maxSpeed: 400,
       jumpSpeed: -300,
       collisions: []
@@ -799,18 +800,18 @@ Quintus.Input = function(Q) {
         if(Q.inputs['left']) {
           p.direction = 'left';
           if(collision && p.landed > 0) {
-            p.vx = p.speed * collision.normalY;
-            p.vy = -p.speed * collision.normalX;
+            p.vx += p.acceleration * collision.normalY;
+            p.vy -= p.speed * collision.normalX;
           } else {
-            p.vx = -p.speed;
+            p.vx -= p.acceleration;
           }        
         } else if(Q.inputs['right']) {
           p.direction = 'right';
           if(collision && p.landed > 0) {
-            p.vx = -p.speed * collision.normalY;
-            p.vy = p.speed * collision.normalX;          
+            p.vx -= p.acceleration * collision.normalY;
+            p.vy += p.speed * collision.normalX;          
           } else {
-            p.vx = p.speed;
+            p.vx += p.acceleration;
           }
         } else {
           p.vx = 0;
