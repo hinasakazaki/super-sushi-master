@@ -146,7 +146,16 @@ Q.Sprite.extend("Player",{
         case "red_fish":
           this.p.scale = 0.3;
           break;
-
+        case "blue_fish":
+          this.p.scale = 1.1;
+        case "orange_fish":
+          this.pscale = 1.1;
+        case "pink_fish":
+          this.pscale = 1.1;
+        case "green_fish":
+          this.pscale = 1.1;
+        case "yellow_fish":
+          this.pscale = 1.1;
       }
     }
 

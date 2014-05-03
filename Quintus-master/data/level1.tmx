@@ -122,6 +122,30 @@
     <property name="sprite" value="orange_fish"/>
    </properties>
   </tile>
+  <tile id="2">
+   <properties>
+    <property name="Class" value="Sushi"/>
+    <property name="sprite" value="blue_fish"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="Class" value="Sushi"/>
+    <property name="sprite" value="pink_fish"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="Class" value="Sushi"/>
+    <property name="sprite" value="green_fish"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="Class" value="Sushi"/>
+    <property name="sprite" value="yellow_fish"/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="231" name="rice" tilewidth="70" tileheight="59">
   <image source="../images/ricestrip.png" width="140" height="59"/>
@@ -139,6 +163,9 @@
     <property name="sprite" value="rice"/>
    </properties>
   </tile>
+ </tileset>
+ <tileset firstgid="233" name="Player" tilewidth="77" tileheight="136">
+  <image source="../images/playerstrip.png" width="770" height="136"/>
  </tileset>
  <imagelayer name="Background" width="200" height="20">
   <image source="../images/bg.png"/>
@@ -4165,7 +4192,6 @@
   </object>
  </objectgroup>
  <objectgroup name="Sprites" width="200" height="20">
-  <object gid="157" x="235" y="820"/>
   <object gid="176" x="1120" y="1120"/>
   <object gid="176" x="1190" y="1120"/>
   <object gid="176" x="1260" y="1120"/>
@@ -4200,5 +4226,6 @@
   <object gid="231" x="1128" y="639"/>
   <object gid="231" x="1002" y="491"/>
   <object gid="231" x="826" y="703"/>
+  <object gid="236" x="138" y="838"/>
  </objectgroup>
 </map>
