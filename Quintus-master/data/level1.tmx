@@ -166,6 +166,11 @@
  </tileset>
  <tileset firstgid="233" name="Player" tilewidth="77" tileheight="136">
   <image source="../images/playerstrip.png" width="770" height="136"/>
+  <tile id="3">
+   <properties>
+    <property name="Class" value="PlayerStrip"/>
+   </properties>
+  </tile>
  </tileset>
  <imagelayer name="Background" width="200" height="20">
   <image source="../images/bg.png"/>

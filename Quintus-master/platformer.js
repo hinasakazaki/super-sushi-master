@@ -22,35 +22,37 @@ var Q = window.Q = Quintus({audioSupported: [ 'wav','mp3','ogg' ]})
         .enableSound();
 
 // Load and init audio files.
-
+Q.gravityY = 9.8*200;
 
 Q.SPRITE_PLAYER = 1;
 Q.SPRITE_COLLECTABLE = 2;
 Q.SPRITE_ENEMY = 4;
 Q.SPRITE_DOOR = 8;
-Q.Sprite.extend("Player",{
+Q.Sprite.extend("PlayerStrip",{
 
   init: function(p) {
 
     this._super(p, {
-      sheet: "player",  // Setting a sprite sheet sets sprite width and height
-      sprite: "player",
+      sheet: "playerstrip",
+      sprite: "playerstrip",
       direction: "right",
-      standingPoints: [ [ -16, 44], [ -23, 35 ], [-23,-48], [23,-48], [23, 35 ], [ 16, 44 ]],
-      duckingPoints : [ [ -16, 44], [ -23, 35 ], [-23,-10], [23,-10], [23, 35 ], [ 16, 44 ]],
-      jumpSpeed: -300,
-      speed: 300,
+      //standingPoints: [ [ -16, 44], [ -23, 35 ], [-23,-48], [23,-48], [23, 35 ], [ 16, 44 ]],
+      //duckingPoints : [ [ -16, 44], [ -23, 35 ], [-23,-10], [23,-10], [23, 35 ], [ 16, 44 ]],
+      jumpSpeed: -1000,
+      gravity: 100,
+      speed: 150,
       strength: 100,
       score: 0,
       rice_count: 0,
       seaweed_count: 0,
+      acceleration: 50,
       sushi_list: [],
       status_effects: [],
       type: Q.SPRITE_PLAYER,
       collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_DOOR | Q.SPRITE_COLLECTABLE
     });
 
-    this.p.points = this.p.standingPoints;
+    //this.p.points = this.p.standingPoints;
 
     this.add('2d, platformerControls, animation, tween');
 
@@ -144,7 +146,7 @@ Q.Sprite.extend("Player",{
       switch(sushi_type) {
         // do the effect and push onto status_effects
         case "red_fish":
-          this.p.scale = 0.3;
+          this.p.scale += 0.3;
           break;
         case "blue_fish":
           this.p.scale = 1.1;
@@ -232,10 +234,10 @@ Q.Sprite.extend("Player",{
         if(this.p.landed > 0) {
           this.p.vx = this.p.vx * (1 - dt*2);
         }
-        this.p.points = this.p.duckingPoints;
+        //this.p.points = this.p.duckingPoints;
       } else {
         this.p.ignoreControls = false;
-        this.p.points = this.p.standingPoints;
+        //this.p.points = this.p.standingPoints;
 
         if(this.p.vx > 0) {
           if(this.p.landed > 0) {
@@ -311,14 +313,14 @@ Q.Sprite.extend("Enemy", {
   },
 
   hit: function(col) {
-    if(col.obj.isA("Player") && !col.obj.p.immune && !this.p.dead) {
+    if(col.obj.isA("PlayerStrip") && !col.obj.p.immune && !this.p.dead) {
       col.obj.trigger('enemy.hit', {"enemy":this,"col":col});
       Q.audio.play('hit.mp3');
     }
   },
 
   die: function(col) {
-    if(col.obj.isA("Player")) {
+    if(col.obj.isA("PlayerStrip")) {
       Q.audio.play('coin.mp3');
       this.p.vx=this.p.vy=0;
       this.play('dead');
@@ -462,7 +464,7 @@ Q.Collectable.extend("Sushi", {
 Q.scene("level1",function(stage) {
   Q.stageTMX("level1.tmx",stage);
 
-  stage.add("viewport").follow(Q("Player").first());
+  stage.add("viewport").follow(Q("PlayerStrip").first());
 });
 
 Q.scene('hud',function(stage) {
@@ -479,23 +481,23 @@ Q.scene('hud',function(stage) {
   container.fit(20);
 });
 
-Q.loadTMX("level1.tmx, fishstrip.png, fish.json, rice.json, ricestrip.png, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3, player.json, player.png", function() {
-    Q.compileSheets("player.png","player.json");
+Q.loadTMX("level1.tmx, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
+    Q.compileSheets("playerstrip.png", "playerstrip.json");
     Q.compileSheets("collectables.png","collectables.json");
     Q.compileSheets("enemies.png","enemies.json");
     Q.compileSheets("doors.png","doors.json");
     Q.compileSheets("ricestrip.png", "rice.json");
     Q.compileSheets("fishstrip.png", "fish.json");
-    Q.animations("player", {
-      walk_right: { frames: [0,1,2,3,4,5,6,7,8,9,10], rate: 1/15, flip: false, loop: true },
-      walk_left: { frames:  [0,1,2,3,4,5,6,7,8,9,10], rate: 1/15, flip:"x", loop: true },
-      jump_right: { frames: [13], rate: 1/10, flip: false },
-      jump_left: { frames:  [13], rate: 1/10, flip: "x" },
-      stand_right: { frames:[14], rate: 1/10, flip: false },
-      stand_left: { frames: [14], rate: 1/10, flip:"x" },
-      duck_right: { frames: [15], rate: 1/10, flip: false },
-      duck_left: { frames:  [15], rate: 1/10, flip: "x" },
-      climb: { frames:  [16, 17], rate: 1/3, flip: false }
+    Q.animations("playerstrip", {
+      walk_right: { frames: [4,5,6], rate: 1/6, flip: false, loop: true },
+      walk_left: { frames:  [4,5,6], rate: 1/6, flip:"x", loop: true },
+      jump_right: { frames: [7,8,9], rate: 1/3, flip: false, loop: false },
+      jump_left: { frames:  [7,8,9], rate: 1/3, flip: "x", loop:false },
+      stand_right: { frames:[3], rate: 1/10, flip: false },
+      stand_left: { frames: [3], rate: 1/10, flip:"x" },
+      duck_right: { frames: [3], rate: 1/10, flip: false },
+      duck_left: { frames:  [3], rate: 1/10, flip: "x" },
+      climb: { frames:  [0], rate: 1/3, flip: false }
     });
     var EnemyAnimations = {
       walk: { frames: [0,1], rate: 1/3, loop: true },
@@ -505,7 +507,7 @@ Q.loadTMX("level1.tmx, fishstrip.png, fish.json, rice.json, ricestrip.png, colle
     Q.animations("slime", EnemyAnimations);
     Q.animations("snail", EnemyAnimations);
     Q.stageScene("level1");
-    Q.stageScene('hud', 3, Q('Player').first().p);
+    Q.stageScene('hud', 3, Q('PlayerStrip').first().p);
   
 }, {
   progressCallback: function(loaded,total) {
