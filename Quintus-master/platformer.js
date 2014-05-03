@@ -10,6 +10,7 @@
 var global_rice_count = 0;
 var global_sushi_count = 0;
 var global_seaweed_count = 0;
+var global_sushi_obtained_count = 0;
 window.addEventListener("load",function() {
 
 // Set up an instance of the Quintus engine  and include
@@ -155,11 +156,13 @@ Q.Sprite.extend("PlayerStrip",{
   step: function(dt) {
     var processed = false;
     if (this.p.rice_count > 0 && this.p.seaweed_count > 0 && this.p.sushi_list.length > 0) {
+
       var sushi_type = this.p.sushi_list.pop();
       this.p.rice_count = this.p.rice_count - 1;
       global_rice_count -= 1;
       global_sushi_count -= 1;
       global_seaweed_count -= 1;
+      global_sushi_obtained_count += 1;
       this.p.seaweed_count = this.p.seaweed_count - 1;
       switch(sushi_type) {
         // do the effect and push onto status_effects
@@ -457,9 +460,6 @@ Q.Collectable.extend("Rice", {
       global_rice_count += 1;
       Q.stageScene('hud', 3, colObj.p);
     this.destroy();
-  },
-  step: function(dt) {
-    this.play("play");
   }
 });
 
@@ -469,13 +469,13 @@ Q.Collectable.extend("Seaweed", {
     // Increment the seaweed count.
       colObj.p.seaweed_count = Math.max(colObj.p.seaweed_count + 1, 1);
       global_seaweed_count += 1;
-      Q.stageScene('hud', 3, colObj.p); 
+      Q.stageScene('hud', 3, colObj.p);
     this.destroy();
   }
 });
 
 Q.Collectable.extend("Sushi", {
-  // When a Sushi is hit.
+  // When a Fish is hit.
   init: function(p) {
     this._super(p, {
       name:"default",
@@ -501,6 +501,7 @@ Q.Sprite.extend("Sushi_Indicator", {
       frame:0,
       scale:0.7,
     });
+
   },
   step: function(dt) {
     if (global_rice_count > 0 && global_seaweed_count <= 0 && global_sushi_count > 0) {
@@ -531,11 +532,9 @@ Q.scene('hud',function(stage) {
     x: 50, y: 0
   }));
 
-  var label = container.insert(new Q.UI.Text({x:200, y: 20,
-    label: "Score: " + stage.options.score, color: "white" }));
 
-  var strength = container.insert(new Q.UI.Text({x:50, y: 20,
-    label: "Health: " + stage.options.strength + '%', color: "white" }));
+  var sushiObtained = container.insert(new Q.UI.Text({x:200, y:20,
+    label: "Number of Sushi obtained: " + global_sushi_obtained_count, color:"white" }))
 
   var rice_indicator = stage.insert(new Q.Sushi_Indicator({x:Q.width - 100, y:40}));
   //var seaweed_indicator = stage.insert(new Q.Seaweed_Indicator);
@@ -555,9 +554,6 @@ Q.loadTMX("level1.tmx, sushistatusindicator.png, sushistatusindicator.json, play
     Q.compileSheets("ricestrip.png", "rice.json");
     Q.compileSheets("fishstrip.png", "fish.json");
     Q.compileSheets("seaweed.png", "seaweed.json");
-    Q.animations("rice", {
-      play: {frames: [0,1], rate: 1/2, loop:true}
-    });
     Q.animations("playerstrip", {
       walk_right: { frames: [4,5,6], rate: 1/6, flip: false, loop: true },
       walk_left: { frames:  [4,5,6], rate: 1/6, flip:"x", loop: true },

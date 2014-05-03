@@ -4223,8 +4223,6 @@
   </object>
  </objectgroup>
  <objectgroup name="Sprites" width="200" height="20">
-  <object gid="199" x="1050" y="1190"/>
-  <object gid="199" x="2170" y="839"/>
   <object gid="207" x="1311" y="641"/>
   <object gid="207" x="626" y="729"/>
   <object gid="207" x="440" y="519"/>
@@ -4252,5 +4250,7 @@
   <object gid="227" x="3140" y="443"/>
   <object gid="227" x="1138" y="834"/>
   <object gid="228" x="995" y="778"/>
+  <object gid="228" x="1025" y="1176"/>
+  <object gid="225" x="2018" y="869"/>
  </objectgroup>
 </map>
