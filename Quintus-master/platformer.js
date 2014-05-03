@@ -504,10 +504,10 @@ Q.loadTMX("level1.tmx, playerstrip.png, playerstrip.json, fishstrip.png, fish.js
     });
     var EnemyAnimations = {
       walk: { frames: [0,1], rate: 1/3, loop: true },
-      dead: { frames: [2], rate: 1/10 }
+
     };
-    Q.animations("fly", EnemyAnimations);
-    Q.animations("slime", EnemyAnimations);
+    Q.animations("monster1", EnemyAnimations);
+    Q.animations("monster2", EnemyAnimations);
     Q.animations("snail", EnemyAnimations);
     Q.stageScene("level1");
     Q.stageScene('hud', 3, Q('PlayerStrip').first().p);
