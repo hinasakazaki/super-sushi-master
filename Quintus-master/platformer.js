@@ -472,7 +472,7 @@ Q.Collectable.extend("Rice", {
       console.log(colObj.p.rice_count);
       colObj.p.rice_count = Math.max(1, colObj.p.rice_count+1);
       global_rice_count += 1;
-      Q.stageScene('hud', 3, colObj.p);
+      //Q.stageScene('hud', 3, colObj.p);
     this.destroy();
   }
 });
@@ -483,7 +483,7 @@ Q.Collectable.extend("Seaweed", {
     // Increment the seaweed count.
       colObj.p.seaweed_count = Math.max(colObj.p.seaweed_count + 1, 1);
       global_seaweed_count += 1;
-      Q.stageScene('hud', 3, colObj.p);
+      //Q.stageScene('hud', 3, colObj.p);
     this.destroy();
   }
 });
@@ -496,13 +496,11 @@ Q.Collectable.extend("Sushi", {
     });
   },
   sensor: function(colObj) {
-    if (this.p.amount) {
-      console.log("hi");
-      colObj.p.sushi_list.push(this.p.name);
-      global_sushi_count += 1;
-      console.log(colObj.p.sushi_list);
-      Q.stageScene('hud', 3, colObj.p);
-    }
+    console.log("hi");
+    colObj.p.sushi_list.push(this.p.name);
+    global_sushi_count += 1;
+    console.log(colObj.p.sushi_list);
+    //Q.stageScene('hud', 3, colObj.p);
     this.destroy();
   }
 });
