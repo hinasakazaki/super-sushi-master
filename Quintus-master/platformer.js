@@ -7,6 +7,9 @@
 // This is the example from the website homepage, it consists
 // a simple, non-animated platformer with some enemies and a 
 // target for the player.
+var global_rice_count = 0;
+var global_sushi_count = 0;
+var global_seaweed_count = 0;
 window.addEventListener("load",function() {
 
 // Set up an instance of the Quintus engine  and include
@@ -30,7 +33,7 @@ var Q = window.Q = Quintus({audioSupported: [ 'wav','mp3','ogg' ]})
         .enableSound();
 
 // Load and init audio files.
-Q.gravityY = 9.8*200;
+Q.gravityY = 9.8*250;
 
 //Q.audio.play("dota2.mp3",{ loop: true });
 
@@ -56,7 +59,7 @@ Q.Sprite.extend("PlayerStrip",{
       score: 0,
       rice_count: 0,
       seaweed_count: 0,
-      acceleration: 50,
+      acceleration: 20,
       sushi_list: [],
       scale: 1,
       status_effects: [],
@@ -151,10 +154,13 @@ Q.Sprite.extend("PlayerStrip",{
 
   step: function(dt) {
     var processed = false;
-    if (this.p.rice_count > 0 && this.p.seaweed_count >= 0 && this.p.sushi_list.length > 0) {
+    if (this.p.rice_count > 0 && this.p.seaweed_count > 0 && this.p.sushi_list.length > 0) {
       var sushi_type = this.p.sushi_list.pop();
       this.p.rice_count = this.p.rice_count - 1;
-      //this.p.seaweed_count = this.p.seaweed_count - 1;
+      global_rice_count -= 1;
+      global_sushi_count -= 1;
+      global_seaweed_count -= 1;
+      this.p.seaweed_count = this.p.seaweed_count - 1;
       switch(sushi_type) {
         // do the effect and push onto status_effects
         case "red_fish":
@@ -368,7 +374,7 @@ Q.Enemy.extend("Snail", {
   init: function(p) {
     this._super(p,{
       w: 55,
-      h: 36
+      h: 66
     });
   }
 
@@ -428,6 +434,8 @@ Q.Sprite.extend("Door", {
   }
 });
 
+Q.Sprite.extend
+
 Q.Collectable.extend("Heart", {
   // When a Heart is hit.
   sensor: function(colObj) {
@@ -475,12 +483,40 @@ Q.Collectable.extend("Sushi", {
     if (this.p.amount) {
       console.log("hi");
       colObj.p.sushi_list.push(this.p.name);
+      global_sushi_count += 1;
       console.log(colObj.p.sushi_list);
       Q.stageScene('hud', 3, colObj.p);
     }
     this.destroy();
   }
 });
+
+
+Q.Sprite.extend("Sushi_Indicator", {
+  init: function(p) {
+    this._super(p, {
+      sheet:"sushistatusindicator",
+      frame:0,
+      scale:0.7,
+    });
+  },
+  step: function(dt) {
+    if (global_sushi_count > 0 && global_rice_count > 0) {
+      this.p.frame = 1;
+    } else if (global_rice_count > 0 && global_seaweed_count <= 0 && global_sushi_count <= 0) {
+      this.p.frame = 2;
+    } else if (global_rice_count > 0 && global_seaweed_count > 0 && global_sushi_count <= 0) {
+      this.p.frame = 3;
+    } else if (global_rice_count <= 0 && global_seaweed_count <=0 && global_sushi_count > 0) {
+      this.p.frame = 4;
+    } else if (global_rice_count <= 0 && global_seaweed_count >0 && global_sushi_count > 0) {
+      this.p.frame = 5;
+    } else if (global_sushi_count <=0 && global_seaweed_count >0 && global_sushi_count <= 0) {
+      this.p.frame = 6;
+    }
+  }
+});
+
 
 Q.scene("level1",function(stage) {
   Q.stageTMX("level1.tmx",stage);
@@ -499,14 +535,19 @@ Q.scene('hud',function(stage) {
   var strength = container.insert(new Q.UI.Text({x:50, y: 20,
     label: "Health: " + stage.options.strength + '%', color: "white" }));
 
+  var rice_indicator = stage.insert(new Q.Sushi_Indicator({x:Q.width - 100, y:40}));
+  //var seaweed_indicator = stage.insert(new Q.Seaweed_Indicator);
+  //var sushi_indicator = stage.insert(new Q.Sushi_Indicator);
+
   container.fit(20);
 });
 
-Q.loadTMX("level1.tmx, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, seaweed.png, monster1strip.png, monster2strip.png, monster1.json, monster2.json, seaweed.json, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
+Q.loadTMX("level1.tmx, sushistatusindicator.png, sushistatusindicator.json, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, seaweed.png, monster1strip.png, monster2strip.png, monster1.json, monster2.json, seaweed.json, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
     Q.compileSheets("playerstrip.png", "playerstrip.json");
     Q.compileSheets("collectables.png","collectables.json");
     Q.compileSheets("monster1strip.png", "monster1.json");
     Q.compileSheets("monster2strip.png", "monster2.json");
+    Q.compileSheets("sushistatusindicator.png", "sushistatusindicator.json");
     Q.compileSheets("enemies.png","enemies.json");
     Q.compileSheets("doors.png","doors.json");
     Q.compileSheets("ricestrip.png", "rice.json");
