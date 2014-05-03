@@ -16,7 +16,7 @@ var Q = window.Q = Quintus({audioSupported: [ 'wav','mp3','ogg' ]})
         .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI, TMX, Audio")
         // Maximize this game to whatever the size of the browser is
         .setup({ maximize: false,
-                  width:   1000, // Set the default width to 800 pixels
+                  width:   800, // Set the default width to 800 pixels
                   height:  600, // Set the default height to 600 pixels
                   upsampleWidth:  420,  // Double the pixel density of the 
                   upsampleHeight: 320,  // game if the w or h is 420x320
@@ -30,15 +30,13 @@ var Q = window.Q = Quintus({audioSupported: [ 'wav','mp3','ogg' ]})
         .enableSound();
 
 // Load and init audio files.
+
 Q.gravityY = 9.8*200;
-
-//Q.audio.play("dota2.mp3",{ loop: true });
-
 Q.SPRITE_PLAYER = 1;
 Q.SPRITE_COLLECTABLE = 2;
 Q.SPRITE_ENEMY = 4;
 Q.SPRITE_DOOR = 8;
-
+//Q.audio.play('dota2.ogg',{ loop: true });
 Q.Sprite.extend("PlayerStrip",{
 
   init: function(p) {
@@ -47,8 +45,8 @@ Q.Sprite.extend("PlayerStrip",{
       sheet: "playerstrip",
       sprite: "playerstrip",
       direction: "right",
-      standingPoints: [ [ -16, -44], [ -23, 70 ], [23,70], [ 16, -44 ]],
-      duckingPoints: [ [ -16, -44], [ -23, 70 ], [23,70], [ 16, -44 ]],
+      //standingPoints: [ [ -16, 44], [ -23, 35 ], [-23,-48], [23,-48], [23, 35 ], [ 16, 44 ]],
+      //duckingPoints : [ [ -16, 44], [ -23, 35 ], [-23,-10], [23,-10], [23, 35 ], [ 16, 44 ]],
       jumpSpeed: -1000,
       gravity: 100,
       speed: 150,
@@ -58,13 +56,12 @@ Q.Sprite.extend("PlayerStrip",{
       seaweed_count: 0,
       acceleration: 50,
       sushi_list: [],
-      scale: 1,
       status_effects: [],
       type: Q.SPRITE_PLAYER,
       collisionMask: Q.SPRITE_DEFAULT | Q.SPRITE_DOOR | Q.SPRITE_COLLECTABLE
     });
 
-    this.p.points = this.p.standingPoints;
+    //this.p.points = this.p.standingPoints;
 
     this.add('2d, platformerControls, animation, tween');
 
@@ -151,16 +148,14 @@ Q.Sprite.extend("PlayerStrip",{
 
   step: function(dt) {
     var processed = false;
-    if (this.p.rice_count > 0 && this.p.seaweed_count >= 0 && this.p.sushi_list.length > 0) {
+    if (this.p.rice_count > 0 && this.p.seaweed_count > 0 && this.p.sushi_list.length > 0) {
       var sushi_type = this.p.sushi_list.pop();
       this.p.rice_count = this.p.rice_count - 1;
-      //this.p.seaweed_count = this.p.seaweed_count - 1;
+      this.p.seaweed_count = this.p.seaweed_count - 1;
       switch(sushi_type) {
         // do the effect and push onto status_effects
         case "red_fish":
-          console.log("hello", this.p.rice_count, this.p.sushi_list.length);
-          this.p.scale += 2;
-          this.p.status_effects.push([1,2]);
+          this.p.scale = 0.3;
           break;
         case "blue_fish":
           this.p.scale = 1.1;
@@ -176,17 +171,13 @@ Q.Sprite.extend("PlayerStrip",{
     }
 
     for (var i = this.p.status_effects.length - 1; i >= 0; i--) {
-      var list = this.p.status_effects[i];
-      var effect = list[0]
-      var len = list[1];
-      if (len <= 0) {
+      var effect, len;
+      [effect, len] = this.p.status_effects[i];
+      if (this.p.status_effects[i] == 0) {
         this.p.status_effects.splice(i, 1);
         // undo the effect
-        this.p.scale -= 2;
-        
       } else {
-        console.log(len);
-        this.p.status_effects[i] = [effect, len-dt];
+        this.p.status_effects[i] = [effect, len-1];
       }
     }
 
@@ -252,10 +243,10 @@ Q.Sprite.extend("PlayerStrip",{
         if(this.p.landed > 0) {
           this.p.vx = this.p.vx * (1 - dt*2);
         }
-        this.p.points = this.p.duckingPoints;
+        //this.p.points = this.p.duckingPoints;
       } else {
         this.p.ignoreControls = false;
-        this.p.points = this.p.standingPoints;
+        //this.p.points = this.p.standingPoints;
 
         if(this.p.vx > 0) {
           if(this.p.landed > 0) {
@@ -292,7 +283,6 @@ Q.Sprite.extend("PlayerStrip",{
     }
   }
 });
-
 
 Q.Sprite.extend("Enemy", {
   init: function(p,defaults) {
@@ -374,7 +364,6 @@ Q.Enemy.extend("Snail", {
 
 });
 
-
 Q.Sprite.extend("Collectable", {
   init: function(p) {
     this._super(p,{
@@ -445,9 +434,10 @@ Q.Collectable.extend("Rice", {
   // When a Rice is hit.
   sensor: function(colObj) {
     // Increment the rice count.
-      console.log(colObj.p.rice_count);
-      colObj.p.rice_count = Math.max(1, colObj.p.rice_count+1);
+    if (this.p.amount) {
+      colObj.p.rice_count = Math.max(colObj.p.rice_count + 1, 99);
       Q.stageScene('hud', 3, colObj.p);
+    }
     this.destroy();
   }
 });
@@ -473,9 +463,7 @@ Q.Collectable.extend("Sushi", {
   },
   sensor: function(colObj) {
     if (this.p.amount) {
-      console.log("hi");
       colObj.p.sushi_list.push(this.p.name);
-      console.log(colObj.p.sushi_list);
       Q.stageScene('hud', 3, colObj.p);
     }
     this.destroy();
@@ -494,15 +482,15 @@ Q.scene('hud',function(stage) {
   }));
 
   var label = container.insert(new Q.UI.Text({x:200, y: 20,
-    label: "Score: " + stage.options.score, color: "white" }));
+    label: "Score: " + stage.options.score, color: "#ba3747"}));
 
   var strength = container.insert(new Q.UI.Text({x:50, y: 20,
-    label: "Health: " + stage.options.strength + '%', color: "white" }));
+    label: "Health: " + stage.options.strength + '%', color: "#ba3747"}));
 
   container.fit(20);
 });
 
-Q.loadTMX("level1.tmx, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, seaweed.png, monster1strip.png, monster2strip.png, monster1.json, monster2.json, seaweed.json, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
+Q.loadTMX("level1.tmx, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, seaweed.png, monster1strip.png, monster2strip.png, monster1.json, monster2.json, seaweed.json, collectables.json, doors.json, enemies.json, dota2.ogg, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
     Q.compileSheets("playerstrip.png", "playerstrip.json");
     Q.compileSheets("collectables.png","collectables.json");
     Q.compileSheets("monster1strip.png", "monster1.json");
