@@ -138,7 +138,6 @@
    <properties>
     <property name="Class" value="Sushi"/>
     <property name="name" value="yellow_fish"/>
-    <property name="sheet" value="fish"/>
     <property name="sprite" value="yellow_fish"/>
    </properties>
   </tile>
@@ -173,6 +172,13 @@
  </tileset>
  <tileset firstgid="229" name="monster1" tilewidth="260" tileheight="350">
   <image source="../images/monster1strip.png" width="520" height="350"/>
+  <tile id="0">
+   <properties>
+    <property name="Class" value="Snail"/>
+    <property name="sheet" value="monster1"/>
+    <property name="sprite" value="monster1"/>
+   </properties>
+  </tile>
  </tileset>
  <imagelayer name="Background" width="200" height="20">
   <image source="../images/bg.png"/>
@@ -4223,5 +4229,10 @@
   <object gid="207" x="788" y="434"/>
   <object gid="207" x="984" y="642"/>
   <object gid="207" x="1094" y="772"/>
+  <object gid="229" x="780" y="726">
+   <properties>
+    <property name="scale" value="0.3"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
