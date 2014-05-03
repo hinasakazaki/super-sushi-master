@@ -12,7 +12,8 @@ var global_sushi_count = 0;
 var global_seaweed_count = 0;
 var global_sushi_obtained_count = 0;
 var global_holy_shit = false;
-var global_current_level = "level1";
+var global_current_level = 1
+var global_goal = false;
 window.addEventListener("load",function() {
 
 // Set up an instance of the Quintus engine  and include
@@ -109,7 +110,7 @@ Q.Sprite.extend("PlayerStrip",{
   },
 
   resetLevel: function() {
-    Q.stageScene("level1");
+    Q.stageScene("level"+global_current_level);
     this.p.strength = 100;
     this.animate({opacity: 1});
     Q.stageScene('hud', 3, this.p);
@@ -169,6 +170,7 @@ Q.Sprite.extend("PlayerStrip",{
       global_seaweed_count -= 1;
       global_sushi_obtained_count += 1;
       this.p.seaweed_count = this.p.seaweed_count - 1;
+      global_goal = true;
        switch(sushi_type) {
         // do the effect and push onto status_effects
         case "red_fish":
@@ -477,7 +479,27 @@ Q.Sprite.extend("Door", {
   }
 });
 
-Q.Sprite.extend
+Q.Sprite.extend("Goal", {
+  init: function(p) {
+    this._super(p, {
+      sensor: true,
+      sheet: p.sprite,
+    });
+    this.on("sensor");
+  },
+  sensor: function(colObj) {
+    this.p.sensor = false;
+    if (global_goal = true) {
+      global_goal = false;
+
+      Q.clearStages();
+      global_current_level += 1
+      Q.stageScene("level" + global_current_level);
+      //console.log("level" + global_current_level, "level" + global_current_level === "level2");
+      Q.stageScene('hud', 3, Q('PlayerStrip').first().p);
+  }
+  }
+});
 
 Q.Collectable.extend("Heart", {
   // When a Heart is hit.
@@ -572,6 +594,13 @@ Q.scene("level1",function(stage) {
   stage.add("viewport").follow(Q("PlayerStrip").first());
 });
 
+Q.scene("level2",function(stage) {
+  Q.stageTMX("level2.tmx",stage);
+
+  stage.add("viewport").follow(Q("PlayerStrip").first());
+});
+
+
 Q.scene('hud',function(stage) {
   var container = stage.insert(new Q.UI.Container({
     x: 170, y: 20
@@ -588,7 +617,7 @@ Q.scene('hud',function(stage) {
   container.fit(20);
 });
 
-Q.loadTMX("level1.tmx, sushistatusindicator.png, sushistatusindicator.json, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, seaweed.png, monster1strip.png, monster2strip.png, monster1.json, monster2.json, seaweed.json, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
+Q.loadTMX("level1.tmx, level2.tmx, sushistatusindicator.png, sushistatusindicator.json, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, seaweed.png, monster1strip.png, monster2strip.png, monster1.json, monster2.json, seaweed.json, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
     Q.compileSheets("playerstrip.png", "playerstrip.json");
     Q.compileSheets("collectables.png","collectables.json");
     Q.compileSheets("monster1strip.png", "monster1.json");

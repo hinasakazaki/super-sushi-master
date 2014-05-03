@@ -53,7 +53,7 @@
    <properties>
     <property name="Class" value="Goal"/>
     <property name="sensor" value="true"/>
-    <property name="sprite" value="door_open"/>
+    <property name="sheet" value="Tiles"/>
    </properties>
   </tile>
  </tileset>
