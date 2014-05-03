@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
-<title>Full-featured platformer example</title>
+<title>SUPER SUSHI MASTER</title>
 <script src='lib/quintus.js'></script>
 <script src='lib/quintus_sprites.js'></script>
 <script src='lib/quintus_scenes.js'></script>
@@ -18,12 +18,24 @@
 
 <script src='platformer.js'></script>
 <link rel="stylesheet" href="assets/style.css" />
+
+<!-- fonts -->
+<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
+<div id = "header"> SUPER SUSHI MASTER </div>
+
   <div id='loading'>
     <div id='loading_container'>
-      <div id='loading_progress'><span>loading...</span></div>
+      <div id='loading_progress'><span> cooking rice... </span></div>
     </div>
   </div>
+
+ <canvas id='myGame' width='500' height='500'></canvas>
+
+<script>
+  var Q = Quintus().setup("myGame");
+</script>
 </body>
 </html>
