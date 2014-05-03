@@ -1113,7 +1113,10 @@ Quintus.Scenes = function(Q) {
     }
 
     Q.activeStage = 0;
-
+    keylist =  ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','down','left','right','fire','action','tab'];
+    for (i = 0, len=keylist.length;i<len;i++) {
+      Q.input_release[keylist[i]] = false;
+    }
     if(Q.input && Q.ctx) { Q.input.drawCanvas(Q.ctx); }
   };
 

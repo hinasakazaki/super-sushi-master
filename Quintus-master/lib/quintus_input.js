@@ -22,29 +22,23 @@ Quintus.Input = function(Q) {
    * @type Object
    * @static
    */
-  var KEY_NAMES = Q.KEY_NAMES = {
-    LEFT: 37, RIGHT: 39,
-    UP: 38, DOWN: 40,
-    SPACE: 32,
-    Z: 90,
-    X: 88,
-    ENTER: 13,
-    ESC: 27,
-    P: 80,
-    S: 83
-  };
-
-  var DEFAULT_KEYS = {
-    LEFT: 'left', RIGHT: 'right',
-    UP: 'up',     DOWN: 'down',
-    SPACE: 'fire',
-    Z: 'fire',
-    X: 'action',
-    ENTER: 'confirm',
-    ESC: 'esc',
-    P: 'P',
-    S: 'S'
-  };
+  var KEY_NAMES = Q.KEY_NAMES = { LEFT: 37, RIGHT: 39, SPACE: 32, TAB: 9, SHIFT: 16, F2: 113,
+                    UP: 38, DOWN: 40, A:65, B:66, C:67, D:68, E:69, F: 70, G:71,
+                    H:72, I:73, J:74, K:75, L:76, M:77, N:78, O:79, P:80, Q:81, R:82,
+                    S:83, T:84, U:85, V:86, W:87, X:88, Y:89,
+                    Z: 90,
+                  };
+  
+  var DEFAULT_KEYS = { LEFT: 'left', RIGHT: 'right',
+                       UP: 'up',     DOWN: 'down',
+                       SPACE: 'fire', TAB: 'tab', SHIFT: 'shift',
+                       F2: 'F2',
+                       A: 'A', B: 'B', C:'C', D:'D', E:'E', F:'F', G:'G', H:'H',
+                       I:'I', J:'J', K:'K', L:'L', M:'M', N:'N' ,O:'O', P:'P', Q:'Q', R:'R',
+                       S:'S', T:'T', U:'U', V:'V', W:'W', X:'X', Y:'Y', Z:'Z',
+                       Z: 'fire',
+                       X: 'action',
+                        };
 
   var DEFAULT_TOUCH_CONTROLS  = [ ['left','<' ],
                             ['right','>' ],
@@ -64,6 +58,7 @@ Quintus.Input = function(Q) {
    */
   Q.inputs = {};
   Q.joypad = {};
+  Q.input_release = {};
 
   var hasTouch =  !!('ontouchstart' in window);
 
@@ -164,6 +159,7 @@ Quintus.Input = function(Q) {
         if(Q.input.keys[e.keyCode]) {
           var actionName = Q.input.keys[e.keyCode];
           Q.inputs[actionName] = false;
+          Q.input_release[actionName] = true;
           Q.input.trigger(actionName + "Up");
           Q.input.trigger('keyup',e.keyCode);
         }
@@ -744,6 +740,8 @@ Quintus.Input = function(Q) {
   Q.component("platformerControls", {
     defaults: {
       speed: 200,
+      acceleration: 10,
+      maxSpeed: 400,
       jumpSpeed: -300,
       collisions: []
     },
@@ -757,12 +755,18 @@ Quintus.Input = function(Q) {
       this.entity.on("bump.bottom",this,"landed");
 
       p.landed = 0;
+      p.maxJumps = 5;
+      p.currentJumps = 5;
+      p.ableToJump = true;
       p.direction ='right';
     },
 
     landed: function(col) {
       var p = this.entity.p;
       p.landed = 1/5;
+      p.currentJumps = p.maxJumps;
+      p.ableToJump = true;
+      p.jumping = false;
     },
 
     step: function(dt) {
@@ -815,15 +819,29 @@ Quintus.Input = function(Q) {
           }
         }
         
-        if(p.landed > 0 && (Q.inputs['up'] || Q.inputs['action']) && !p.jumping) {
+        if(p.landed > 0 && (Q.inputs['up'] || Q.inputs['action']) && !p.jumping && p.ableToJump) {
           p.vy = p.jumpSpeed;
           p.landed = -dt;
           p.jumping = true;
-        } else if(Q.inputs['up'] || Q.inputs['action']) {
-          this.entity.trigger('jump', this.entity);
-          p.jumping = true;
+          p.ableToJump = false;
+          p.currentJumps -= 1;
+          console.log("jumped");
+          
+        } else if (p.jumping && p.landed < 0 && (Q.input_release['up']) && p.ableToJump == false) {
+          Q.input_release['up'] = false;
+          
+          p.ableToJump = true;
+          console.log("stopped jumpping");
         }
-        
+
+        else if(p.landed < 0 && (Q.inputs['up'] || Q.inputs['action']) && p.jumping && p.currentJumps > 0 && p.ableToJump)  {
+          //this.entity.trigger('jump', this.entity);
+          p.vy = p.jumpSpeed;
+          p.currentJumps -= 1;
+          p.ableToJump = false;
+          console.log("jumps left: ", p.currentJumps);
+        }
+        /*
         if(p.jumping && !(Q.inputs['up'] || Q.inputs['action'])) {
           p.jumping = false;
           this.entity.trigger('jumped', this.entity);
@@ -831,6 +849,7 @@ Quintus.Input = function(Q) {
             p.vy = p.jumpSpeed / 3;
           }
         }
+        */
       }
       p.landed -= dt;
     }
