@@ -139,14 +139,14 @@ Q.Sprite.extend("PlayerStrip",{
 
   step: function(dt) {
     var processed = false;
-    if (this.p.rice_count > 0 && this.p.seaweed_count > 0 && this.p.sushi_list.length > 0) {
+    if (this.p.rice_count > 0 && this.p.seaweed_count >= 0 && this.p.sushi_list.length > 0) {
       var sushi_type = this.p.sushi_list.pop();
       this.p.rice_count = this.p.rice_count - 1;
       this.p.seaweed_count = this.p.seaweed_count - 1;
       switch(sushi_type) {
         // do the effect and push onto status_effects
         case "red_fish":
-          this.p.scale = 0.3;
+          this.p.scale += 0.3;
           break;
         case "blue_fish":
           this.p.scale = 1.1;
@@ -481,16 +481,13 @@ Q.scene('hud',function(stage) {
   container.fit(20);
 });
 
-Q.loadTMX("level1.tmx, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, seaweed.png, monster1strip.png, monster2strip.png, monster1.json, monster2.json, seaweed.json, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
+Q.loadTMX("level1.tmx, playerstrip.png, playerstrip.json, fishstrip.png, fish.json, rice.json, ricestrip.png, collectables.json, doors.json, enemies.json, fire.mp3, jump.mp3, heart.mp3, hit.mp3, coin.mp3", function() {
     Q.compileSheets("playerstrip.png", "playerstrip.json");
     Q.compileSheets("collectables.png","collectables.json");
-    Q.compileSheets("monster1strip.png", "monster1.json");
-    Q.compileSheets("monster2strip.png", "monster2.json");
     Q.compileSheets("enemies.png","enemies.json");
     Q.compileSheets("doors.png","doors.json");
     Q.compileSheets("ricestrip.png", "rice.json");
     Q.compileSheets("fishstrip.png", "fish.json");
-    Q.compileSheets("seaweed.png", "seaweed.json");
     Q.animations("playerstrip", {
       walk_right: { frames: [4,5,6], rate: 1/6, flip: false, loop: true },
       walk_left: { frames:  [4,5,6], rate: 1/6, flip:"x", loop: true },
@@ -504,10 +501,10 @@ Q.loadTMX("level1.tmx, playerstrip.png, playerstrip.json, fishstrip.png, fish.js
     });
     var EnemyAnimations = {
       walk: { frames: [0,1], rate: 1/3, loop: true },
-
+      dead: { frames: [2], rate: 1/10 }
     };
-    Q.animations("monster1", EnemyAnimations);
-    Q.animations("monster2", EnemyAnimations);
+    Q.animations("fly", EnemyAnimations);
+    Q.animations("slime", EnemyAnimations);
     Q.animations("snail", EnemyAnimations);
     Q.stageScene("level1");
     Q.stageScene('hud', 3, Q('PlayerStrip').first().p);
