@@ -137,13 +137,16 @@ Q.Sprite.extend("Player",{
 
   step: function(dt) {
     var processed = false;
-
-    if (this.p.rice_count > 0 && this.p.seaweed_count > 0 && this.p.sushi_list.length > 0) {
-      var sushi_type = this.p.sushi_list.pop().name;
+    if (this.p.rice_count > 0 && this.p.seaweed_count >= 0 && this.p.sushi_list.length > 0) {
+      var sushi_type = this.p.sushi_list.pop();
       this.p.rice_count = this.p.rice_count - 1;
       this.p.seaweed_count = this.p.seaweed_count - 1;
       switch(sushi_type) {
         // do the effect and push onto status_effects
+        case "red_fish":
+          this.p.scale = 0.3;
+          break;
+
       }
     }
 
@@ -433,6 +436,11 @@ Q.Collectable.extend("Seaweed", {
 
 Q.Collectable.extend("Sushi", {
   // When a Sushi is hit.
+  init: function(p) {
+    this._super(p, {
+      name:"default",
+    });
+  },
   sensor: function(colObj) {
     if (this.p.amount) {
       colObj.p.sushi_list.push(this.p.name);
@@ -467,8 +475,8 @@ Q.loadTMX("level1.tmx, fishstrip.png, fish.json, rice.json, ricestrip.png, colle
     Q.compileSheets("collectables.png","collectables.json");
     Q.compileSheets("enemies.png","enemies.json");
     Q.compileSheets("doors.png","doors.json");
-    Q.compileSheets("fishstrip.png", "fish.json");
     Q.compileSheets("ricestrip.png", "rice.json");
+    Q.compileSheets("fishstrip.png", "fish.json");
     Q.animations("player", {
       walk_right: { frames: [0,1,2,3,4,5,6,7,8,9,10], rate: 1/15, flip: false, loop: true },
       walk_left: { frames:  [0,1,2,3,4,5,6,7,8,9,10], rate: 1/15, flip:"x", loop: true },

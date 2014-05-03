@@ -111,7 +111,32 @@
   <tile id="0">
    <properties>
     <property name="Class" value="Sushi"/>
+    <property name="amount" value="1"/>
+    <property name="name" value="red_fish"/>
     <property name="sprite" value="red_fish"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Class" value="Sushi"/>
+    <property name="sprite" value="orange_fish"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="231" name="rice" tilewidth="70" tileheight="59">
+  <image source="../images/ricestrip.png" width="140" height="59"/>
+  <tile id="0">
+   <properties>
+    <property name="Class" value="Rice"/>
+    <property name="amount" value="1"/>
+    <property name="sheet" value="rice"/>
+    <property name="sprite" value="rice"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Class" value="Rice"/>
+    <property name="sprite" value="rice"/>
    </properties>
   </tile>
  </tileset>
@@ -4172,5 +4197,8 @@
   <object gid="225" x="672" y="385"/>
   <object gid="225" x="964" y="395"/>
   <object gid="225" x="1220" y="409"/>
+  <object gid="231" x="1128" y="639"/>
+  <object gid="231" x="1002" y="491"/>
+  <object gid="231" x="826" y="703"/>
  </objectgroup>
 </map>
