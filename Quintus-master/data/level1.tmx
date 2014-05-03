@@ -182,8 +182,19 @@
   <tile id="0">
    <properties>
     <property name="Class" value="Seaweed"/>
+    <property name="cy" value="0"/>
     <property name="scale" value="0.5"/>
     <property name="sprite" value="seaweed"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="228" name="monster2" tilewidth="130" tileheight="130">
+  <image source="../images/monster2strip.png" width="260" height="130"/>
+  <tile id="0">
+   <properties>
+    <property name="Class" value="Fly"/>
+    <property name="scale" value="0.5"/>
+    <property name="sprite" value="monster2"/>
    </properties>
   </tile>
  </tileset>
@@ -4212,9 +4223,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Sprites" width="200" height="20">
-  <object gid="198" x="630" y="840"/>
   <object gid="199" x="1050" y="1190"/>
-  <object gid="200" x="1110" y="842"/>
   <object gid="199" x="2170" y="839"/>
   <object gid="207" x="1311" y="641"/>
   <object gid="207" x="626" y="729"/>
@@ -4236,15 +4245,12 @@
   <object gid="207" x="788" y="434"/>
   <object gid="207" x="984" y="642"/>
   <object gid="207" x="1094" y="772"/>
-  <object gid="225" x="893" y="476">
-   <properties>
-    <property name="scale" value="0.3"/>
-   </properties>
-  </object>
+  <object gid="225" x="489" y="836"/>
   <object gid="227" x="1863" y="846"/>
   <object gid="227" x="518" y="842"/>
   <object gid="227" x="2411" y="778"/>
   <object gid="227" x="3140" y="443"/>
   <object gid="227" x="1138" y="834"/>
+  <object gid="228" x="995" y="778"/>
  </objectgroup>
 </map>

@@ -373,8 +373,7 @@ Q.Enemy.extend("Slime", {
 Q.Enemy.extend("Snail", {
   init: function(p) {
     this._super(p,{
-      w: 55,
-      h: 66
+      scale: 0.3,
     });
   }
 
@@ -455,6 +454,7 @@ Q.Collectable.extend("Rice", {
     // Increment the rice count.
       console.log(colObj.p.rice_count);
       colObj.p.rice_count = Math.max(1, colObj.p.rice_count+1);
+      global_rice_count += 1;
       Q.stageScene('hud', 3, colObj.p);
     this.destroy();
   }
@@ -464,10 +464,9 @@ Q.Collectable.extend("Seaweed", {
   // When a Seaweed is hit.
   sensor: function(colObj) {
     // Increment the seaweed count.
-    if (this.p.amount) {
-      colObj.p.seaweed_count = Math.max(colObj.p.seaweed_count + 1, 99);
+      colObj.p.seaweed_count = Math.max(colObj.p.seaweed_count + 1, 1);
+      global_seaweed_count += 1;
       Q.stageScene('hud', 3, colObj.p);
-    }
     this.destroy();
   }
 });
@@ -501,7 +500,7 @@ Q.Sprite.extend("Sushi_Indicator", {
     });
   },
   step: function(dt) {
-    if (global_sushi_count > 0 && global_rice_count > 0) {
+    if (global_rice_count > 0 && global_seaweed_count <= 0 && global_sushi_count > 0) {
       this.p.frame = 1;
     } else if (global_rice_count > 0 && global_seaweed_count <= 0 && global_sushi_count <= 0) {
       this.p.frame = 2;
