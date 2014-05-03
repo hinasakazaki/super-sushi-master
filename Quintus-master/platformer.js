@@ -457,6 +457,9 @@ Q.Collectable.extend("Rice", {
       global_rice_count += 1;
       Q.stageScene('hud', 3, colObj.p);
     this.destroy();
+  },
+  step: function(dt) {
+    this.play("play");
   }
 });
 
@@ -466,7 +469,7 @@ Q.Collectable.extend("Seaweed", {
     // Increment the seaweed count.
       colObj.p.seaweed_count = Math.max(colObj.p.seaweed_count + 1, 1);
       global_seaweed_count += 1;
-      Q.stageScene('hud', 3, colObj.p);
+      Q.stageScene('hud', 3, colObj.p); 
     this.destroy();
   }
 });
@@ -552,6 +555,9 @@ Q.loadTMX("level1.tmx, sushistatusindicator.png, sushistatusindicator.json, play
     Q.compileSheets("ricestrip.png", "rice.json");
     Q.compileSheets("fishstrip.png", "fish.json");
     Q.compileSheets("seaweed.png", "seaweed.json");
+    Q.animations("rice", {
+      play: {frames: [0,1], rate: 1/2, loop:true}
+    });
     Q.animations("playerstrip", {
       walk_right: { frames: [4,5,6], rate: 1/6, flip: false, loop: true },
       walk_left: { frames:  [4,5,6], rate: 1/6, flip:"x", loop: true },
